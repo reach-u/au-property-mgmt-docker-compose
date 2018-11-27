@@ -1,0 +1,30 @@
+version: '3'
+services:
+  frontend:
+    image: africaunion/au-property-mgmt-fe
+    container_name: au-property-mgmt-fe
+    networks:
+      - au-network
+  backend:
+    image: africaunion/au-property-mgmt-rest
+    container_name: au-property-mgmt-rest
+    networks:
+      - au-network
+  db:
+    image: africaunion/au-property-mgmt-db
+    container_name: au-property-mgmt-db
+    networks:
+      - au-network
+  nginx:
+    image: africaunion/au-property-mgmt-nginx
+    container_name: au-property-mgmt-nginx
+    networks:
+      - au-network
+    depends_on:
+    - db
+    - backend
+    - frontend
+    ports:
+      - "80:80"
+networks:
+  au-network:
